@@ -81,22 +81,28 @@ class ForwardKinematics(Node):
                 ]
             )
 
+        # NOTE: Z axis should be aligned with motor (pointing from roter side to top)
+        # NOTE: In radians
+        # NOTE: Should rotate theta around Z axis
+
+        PI = math.PI
+
         # T_0_1 (base_link to leg_front_l_1)
-        T_0_1 = translation(0.07500, 0.0445, 0) @ rotation_x(-1.57080) @ rotation_z(theta1)
+        T_0_1 = translation(0.07500, 0.0445, 0) @ rotation_x(-PI/2) @ rotation_z(-theta1)  # Should this be negative theta1
 
         # T_1_2 (leg_front_l_1 to leg_front_l_2)
         ## TODO: Implement the transformation matrix from leg_front_l_1 to leg_front_l_2
-        T_1_2 = None
+        T_1_2 = translate(0, 0, -0.039) @ rotation_y(-PI/2) @ rotation_z(-theta2)
 
         # T_2_3 (leg_front_l_2 to leg_front_l_3)
         ## TODO: Implement the transformation matrix from leg_front_l_2 to leg_front_l_3
-        T_2_3 = None
+        T_2_3 = translate(0, -0.0494, 0.0685) @ rotation_y(PI/2) @ rotation_z(-theta2)
 
         # T_3_ee (leg_front_l_3 to end-effector)
-        T_3_ee = None
+        T_3_ee = translate(0.06231, -0.06216, 0)
 
         # TODO: Compute the final transformation. T_0_ee is the multiplication of the previous transformation matrices
-        T_0_ee = None
+        T_0_ee = T_3_ee @ T_2_3 @ T_1_2 @ T_0_1
 
         # TODO: Extract the end-effector position. The end effector position is a 3x1 vector (not in homogenous coordinates)
         end_effector_position = None
