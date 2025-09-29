@@ -49,22 +49,37 @@ class ForwardKinematics(Node):
             )
 
         def rotation_y(angle):
-            ## TODO: Implement the rotation matrix about the y-axis
-            # return np.array([
-            # ])
-            raise NotImplementedError()
+            ## Rotation matrix about the y-axis
+            return np.array(
+                [
+                    [np.cos(angle), 0, np.sin(angle), 0],
+                    [0, 1, 0, 0],
+                    [-np.sin(angle), 0, np.cos(angle), 0],
+                    [0, 0, 0, 1],
+                ]
+            )
 
         def rotation_z(angle):
-            ## TODO: Implement the rotation matrix about the z-axis
-            # return np.array([
-            # ])
-            raise NotImplementedError()
+            ## Rotation matrix about the z-axis
+            return np.array(
+                [
+                    [np.cos(angle), -np.sin(angle), 0, 0],
+                    [np.sin(angle), np.cos(angle), 0, 0],
+                    [0, 0, 1, 0],
+                    [0, 0, 0, 1],
+                ]
+            )
 
         def translation(x, y, z):
-            ## TODO: Implement the translation matrix
-            # return np.array([
-            # ])
-            raise NotImplementedError()
+            ## Translation matrix
+            return np.array(
+                [
+                    [0, 0, 0, x],
+                    [0, 0, 0, y],
+                    [0, 0, 0, z],
+                    [0, 0, 0, 1],
+                ]
+            )
 
         # T_0_1 (base_link to leg_front_l_1)
         T_0_1 = translation(0.07500, 0.0445, 0) @ rotation_x(-1.57080) @ rotation_z(theta1)
