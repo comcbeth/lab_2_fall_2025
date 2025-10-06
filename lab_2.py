@@ -4,6 +4,7 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64MultiArray
 from visualization_msgs.msg import Marker
 import numpy as np
+import math
 
 
 class ForwardKinematics(Node):
@@ -88,14 +89,14 @@ class ForwardKinematics(Node):
 
         # T_1_2 (leg_front_l_1 to leg_front_l_2)
         ## The transformation matrix from leg_front_l_1 to leg_front_l_2
-        T_1_2 = translate(0, 0, -0.039) @ rotation_y(-PI/2) @ rotation_z(-theta2)
+        T_1_2 = translation(0, 0, -0.039) @ rotation_y(-PI/2) @ rotation_z(-theta2)
 
         # T_2_3 (leg_front_l_2 to leg_front_l_3)
         ## Transformation matrix from leg_front_l_2 to leg_front_l_3
-        T_2_3 = translate(0, -0.0494, 0.0685) @ rotation_y(PI/2) @ rotation_z(-theta3)
+        T_2_3 = translation(0, -0.0494, 0.0685) @ rotation_y(PI/2) @ rotation_z(-theta3)
 
         # T_3_ee (leg_front_l_3 to end-effector)
-        T_3_ee = translate(0.06231, -0.06216, 0.018)
+        T_3_ee = translation(0.06231, -0.06216, 0.018)
 
         # The final transformation. T_0_ee is the multiplication of the previous transformation matrices
         T_0_ee = T_3_ee @ T_2_3 @ T_1_2 @ T_0_1
